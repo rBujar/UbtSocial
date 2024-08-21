@@ -16,7 +16,7 @@ const navbar = () => {
       <div className="navbar">
         <div className="left">
           <Link to="/" style={{textDecoration: "none"}}>
-          <span>Ubt Social</span>
+          <span>UbtSocial</span>
           </Link>
           <HomeOutlinedIcon/>
           <DarkModeOutlinedIcon/>
