@@ -23,11 +23,12 @@ function App() {
     return (
       <div>
         <Navbar />
-        <div stlye={{ display: "flex" }}>
+        <div style={{ display: "flex" }}>
           <LeftBar />
+          <div style={{flex:6}}>
           <Outlet />
+          </div>
           <RightBar />
-
         </div>
       </div>
     );
