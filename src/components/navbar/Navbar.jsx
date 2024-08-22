@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 
 const navbar = () => {
   return (
-    <div>
       <div className="navbar">
         <div className="left">
           <Link to="/" style={{textDecoration: "none"}}>
@@ -36,7 +35,6 @@ const navbar = () => {
           </div>
         </div>
         </div>
-    </div>
   )
 }
 
