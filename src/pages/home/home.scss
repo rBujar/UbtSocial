@@ -1,5 +1,18 @@
+@import "../../style.scss";
+
 *{  
     &::-webkit-scrollbar{
         display: none;
       }
+}
+
+.home{
+  @include themify($themes) {
+
+    background-color: themed("bgSoft");
+    padding: 20px 70px;
+
+
+
+  }
 }
