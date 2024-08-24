@@ -1,5 +1,5 @@
 import Login from "./pages/login/Login";
-import Register from "./pages/register/register";
+import Register from "./pages/register/Register";
 import Navbar from "./components/navbar/Navbar";
 import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
@@ -16,14 +16,15 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
+import { AuthContext } from "./context/authContext";
+
 function App() {
 
 
-  const currentUser = true;
+  const {currentUser} = useContext(AuthContext);
 
-  const {darkMode} = useContext(DarkModeContext)
+  const {darkMode} = useContext(DarkModeContext);
 
-  console.log(darkMode)
 
   const Layout = () => {
     return (
@@ -42,10 +43,10 @@ function App() {
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Navigate to="/login" />
+      return <Navigate to="/login" />;
     }
 
-    return children
+    return children;
   }
 
   const router = createBrowserRouter([
@@ -56,12 +57,12 @@ function App() {
       </ProtectedRoute>,
       children: [
         {
-          path: "/profile/:id",
-          element: <Profile />
-        },
-        {
           path: "/",
           element: <Home />
+        },
+        {
+          path: "/profile/:id",
+          element: <Profile />
         }
       ]
     },
