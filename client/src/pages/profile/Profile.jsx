@@ -13,13 +13,16 @@ import moment from "moment";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { makeRequest } from '../../axios.js'
 import { useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext.jsx";
+import Update from "../../components/update/Update.jsx"
 
 
 
 
 const Profile = () => {
+
+  const [openUpdate, setOpenUpdate] = useState(false)
 
   const { currentUser } = useContext(AuthContext);
 
@@ -66,11 +69,11 @@ const Profile = () => {
     <div className="profile">
       {isPending ? "Pending..." : <> <div className="images">
         <img
-          src={data?.coverPic}
+          src={"/upload/"+data.coverPic}
           alt=""
           className="cover" />
         <img
-          src={data?.profilePic}
+          src={"/upload/"+data.profilePic}
           alt=""
           className="profilePic"
         />
@@ -94,19 +97,19 @@ const Profile = () => {
               </a>
             </div>
             <div className="center">
-              <span>{data?.name}</span>
+              <span>{data.name}</span>
               <div className="info">
                 <div className="item">
                   <PlaceIcon />
-                  <span>{data?.city}</span>
+                  <span>{data.city}</span>
                 </div>
                 <div className="item">
                   <LanguageIcon />
-                  <span>{data?.website}</span>
+                  <span>{data.website}</span>
                 </div>
               </div>
               {rIsPending ? "Pending..." : userId === currentUser.id ? (
-                <button >Update</button>
+                <button onClick={()=>setOpenUpdate(true)}>Update</button>
 
               ) : (
 
@@ -119,8 +122,13 @@ const Profile = () => {
             </div>
           </div>
           <Posts userId={userId}/>
-        </div> </>}
+        </div> 
+        </>}
+
+       {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data}/>}
     </div>
+
+
 
   );
 };
