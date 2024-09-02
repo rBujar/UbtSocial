@@ -34,60 +34,92 @@ const Profile = () => {
       })
 
   })
+  const { isPending: rIsPending,data: relationshipData } = useQuery({
+    queryKey: ["relationship"],
+    queryFn: () =>
+
+      makeRequest.get("/relationships?followedUserId=" + userId).then((res) => {
+        return res.data;
+      })
+
+  })
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (following) => {
+      if (following) return makeRequest.delete("/relationships?userId=" + userId);
+      return makeRequest.post("/relationships", { userId });
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['relationship'] })
+    },
+  })
+
+  const handleFollow = () => {
+    mutation.mutate(relationshipData.includes(currentUser.id))
+  };
 
 
   return (
     <div className="profile">
       {isPending ? "Pending..." : <> <div className="images">
-        <img 
-        src={data.coverPic} 
-        alt="" 
-        className="cover" />
         <img
-          src={data.profilePic}
+          src={data?.coverPic}
+          alt=""
+          className="cover" />
+        <img
+          src={data?.profilePic}
           alt=""
           className="profilePic"
         />
       </div><div className="profileContainer">
-        <div className="uInfo">
-          <div className="left">
-            <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
-            </a>
-          </div>
-          <div className="center">
-            <span>{data.name}</span>
-            <div className="info">
-              <div className="item">
-                <PlaceIcon />
-                <span>{data.city}</span>
-              </div>
-              <div className="item">
-                <LanguageIcon />
-                <span>{data.website}</span>
-              </div>
+          <div className="uInfo">
+            <div className="left">
+              <a href="http://facebook.com">
+                <FacebookTwoToneIcon fontSize="large" />
+              </a>
+              <a href="http://facebook.com">
+                <InstagramIcon fontSize="large" />
+              </a>
+              <a href="http://facebook.com">
+                <TwitterIcon fontSize="large" />
+              </a>
+              <a href="http://facebook.com">
+                <LinkedInIcon fontSize="large" />
+              </a>
+              <a href="http://facebook.com">
+                <PinterestIcon fontSize="large" />
+              </a>
             </div>
-            {userId === currentUser.id ? (<button>Update</button>) : <button>Follow</button>}
+            <div className="center">
+              <span>{data?.name}</span>
+              <div className="info">
+                <div className="item">
+                  <PlaceIcon />
+                  <span>{data?.city}</span>
+                </div>
+                <div className="item">
+                  <LanguageIcon />
+                  <span>{data?.website}</span>
+                </div>
+              </div>
+              {rIsPending ? "Pending..." : userId === currentUser.id ? (
+                <button >Update</button>
+
+              ) : (
+
+                <button onClick={handleFollow}>{relationshipData.includes(currentUser.id) ? "Following" : "Follow"}</button>
+              )}
+            </div>
+            <div className="right">
+              <EmailOutlinedIcon />
+              <MoreVertIcon />
+            </div>
           </div>
-          <div className="right">
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
-          </div>
-        </div>
-        <Posts />
-      </div> </>}
+          <Posts userId={userId}/>
+        </div> </>}
     </div>
 
   );
