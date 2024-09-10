@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 // import Update from "../../components/update/adminUpdate.jsx"
 import { Modal, Button, Form } from 'react-bootstrap';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
@@ -24,6 +25,7 @@ const Dashboard = () => {
       username: ``,
       email: ``,
       name: ``,
+      role: ``,
       profilePic: ``,
       coverPic: ``
     });
@@ -49,6 +51,7 @@ const Dashboard = () => {
         setUpdatedUserInfo({
           username: user.username || ``,
           name: user.name || ``,
+          role: user.role || ``,
           email: user.email || ``,
           profilePic: user.profilePic || ``,
           coverPic: user.coverPic || ``
@@ -117,6 +120,21 @@ const Dashboard = () => {
         }
       };
 
+      const handleLogout = async () => {
+        try{
+          await makeRequest.post("/auth/logout");
+          navigate('/login');
+        }catch (error){
+          console.error("Error logging out: ", error);
+        }
+      };
+
+      const navigate = useNavigate();
+
+      const handleNavigateMain = () => {
+        navigate('/');
+      };
+
 
   return (
     <div className="dashboard">
@@ -149,6 +167,15 @@ const Dashboard = () => {
                 </li>
               </ul>
             </li>
+            <li className="sidebar-navigate">
+              <div className='navigate'>
+
+            <Button className="mainPage" onClick={handleNavigateMain}> Main Page </Button>
+            <Button className="logout" onClick={handleLogout}> Logout </Button>
+            
+              </div>
+              </li>
+            
             {/* More sidebar items... */}
           </ul>
         </div>
@@ -168,7 +195,7 @@ const Dashboard = () => {
                 <div className="dropdown-menu dropdown-menu-end">
                   <a href="#" className="dropdown-item">Profile</a>
                   <a href="#" className="dropdown-item">Setting</a>
-                  <a href="#" className="dropdown-item">Logout</a>
+                  
                 </div>
               </li>
             </ul>
@@ -230,6 +257,7 @@ const Dashboard = () => {
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Profile Picture</th>
                         <th scope="col">Cover Picture</th>
                         <th scope="col">Actions</th>
@@ -251,6 +279,7 @@ const Dashboard = () => {
                             <td>{user.username}</td>
                             <td>{user.email}</td>
                             <td>{user.name}</td>
+                            <td>{user.role}</td>
                             <td>
                               <img 
                                 src={`/upload/${user.profilePic}`} 
@@ -311,6 +340,15 @@ const Dashboard = () => {
                     type="text"
                     name="name"
                     value={updatedUserInfo.name || ``}
+                    onChange={handleUpdateChange}                 
+                  /> 
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                  <Form.Label>role</Form.Label>
+                  <Form.Control 
+                    type="int"
+                    name="role"
+                    value={updatedUserInfo.role || ``}
                     onChange={handleUpdateChange}                 
                   /> 
                 </Form.Group>

@@ -61,13 +61,14 @@ h4 {
   min-width: 264px;
   background: var(--bs-dark);
   transition: all 0.35s ease-in-out;
+  position: relative;
 
   .sidebar-logo {
-    padding: 1.15rem;
+    padding: 18px;
 
     a {
       color: #e9ecef;
-      font-size: 1.15rem;
+      font-size: 18px;
       font-weight: 600;
     }
   }
@@ -80,26 +81,26 @@ h4 {
 
   .sidebar-header {
     color: #e9ecef;
-    font-size: .75rem;
-    padding: 1.5rem 1.5rem .375rem;
+    font-size: 12px;
+    padding: 24px 24px 6px;
   }
 
   a.sidebar-link {
-    padding: .625rem 1.625rem;
+    padding: 10px 26px;
     color: #e9ecef;
     display: block;
-    font-size: 0.875rem;
+    font-size: 14px;
     position: relative;
 
     &[data-bs-toggle="collapse"]::after {
       content: "";
       border: solid;
-      border-width: 0 .075rem .075rem 0;
+      border-width: 0 1px 1px 0;
       display: inline-block;
       padding: 2px;
       position: absolute;
-      right: 1.5rem;
-      top: 1.4rem;
+      right: 24px;
+      top: 22px;
       transform: rotate(-135deg);
       transition: all .2s ease-out;
     }
@@ -114,6 +115,49 @@ h4 {
     margin-left: -264px;
   }
 }
+
+.sidebar-navigate{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 16px;
+  background: var(--bs-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .navigate{
+    .logout, .mainPage{
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &.logout{
+        background-color: #dc3545;
+        color: #fff;
+
+        &:hover{
+          background-color: #c82333;
+        }
+      }
+
+      &.mainPage {
+        background-color: #007bff;
+        color: #fff;
+
+        &:hover{
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+}
+
 
 .main {
   display: flex;
