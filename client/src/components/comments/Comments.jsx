@@ -10,7 +10,7 @@ const Comments = ({postId}) => {
     const [desc, setDesc] = useState("")
     
   const { isPending, error, data } = useQuery({
-    queryKey: ['comments'],
+    queryKey: ['comments', postId],
     queryFn: () =>
 
       makeRequest.get("/comments?postId="+postId).then((res) => {
@@ -21,7 +21,7 @@ const Comments = ({postId}) => {
 
   const queryClient = useQueryClient()
 
-    const mutation = useMutation({
+    const addCommentMutation = useMutation({
         mutationFn:(newComment) =>{
             return makeRequest.post("/comments", newComment)
         },
@@ -30,16 +30,38 @@ const Comments = ({postId}) => {
           queryClient.invalidateQueries({ queryKey: ['comments'] })
         },
       })
+    const deleteCommentMutation = useMutation({
+        mutationFn:(commentId) =>{
+            return makeRequest.delete(`/comments/${commentId}`)
+        },
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries({ queryKey: ['comments'] })
+          
+        },
 
+      })
+  
 
     const handleClick = async (e) =>{
         e.preventDefault();
-        mutation.mutate({desc, postId});
+        addCommentMutation.mutate({desc, postId});
         setDesc("");
 
     }
 
     const {currentUser} = useContext(AuthContext)
+
+    const handleDelete = (commentId) => {
+      deleteCommentMutation.mutate(commentId, {
+        onError: (error) => {
+          console.error("Error deleting comment:", error);
+        },
+        onSuccess: () => {
+          console.log("Comment deleted successfully");
+        },
+      });
+    };
 
    
     return (
@@ -51,13 +73,16 @@ const Comments = ({postId}) => {
                 <button onClick={handleClick}>Send</button>
             </div>
             {isPending ? "Pending..." : data.map(comment => (
-                <div className="comment">
+                <div className="comment" key={comment.id}>
                     <img src={"/upload/"+comment.profilePic} alt="" />
                     <div className="info">
                         <span>{comment.name}</span>
                         <p>{comment.desc}</p>
                     </div>
                     <span className="date">{moment(comment.createdAt).fromNow()}</span>
+               
+                      <button onClick={() =>handleDelete(comment.id)}>Delete</button>
+                    
                 </div>
             ))
             }

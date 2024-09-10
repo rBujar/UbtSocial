@@ -13,6 +13,7 @@ import { makeRequest } from '../../axios.js'
 import { AuthContext } from "../../context/authContext.jsx";
 
 
+
 const Post = ({ post }) => {
 
   const [commentOpen, setCommentOpen] = useState(false);
@@ -20,7 +21,7 @@ const Post = ({ post }) => {
 
   const { currentUser } = useContext(AuthContext)
 
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data: LikesData } = useQuery({
     queryKey: ['likes', post.id],
     queryFn: () =>
 
@@ -30,9 +31,15 @@ const Post = ({ post }) => {
 
   })
 
+  const { isPending: isCommentsPending, data: commentsData } = useQuery({
+    queryKey: ["comments", post.id],
+    queryFn: () =>
+      makeRequest.get("/comments?postId=" + post.id).then((res) => res.data),
+  });
+   
   const queryClient = useQueryClient()
 
-  const mutation = useMutation({
+  const likeMutation = useMutation({
     mutationFn: (liked) => {
       if (liked) return makeRequest.delete("/likes?postId=" + post.id);
       return makeRequest.post("/likes", { postId: post.id });
@@ -53,7 +60,7 @@ const Post = ({ post }) => {
   })
 
   const handleLike = () => {
-    mutation.mutate(post.id)
+    likeMutation.mutate(LikesData.includes(currentUser.id))
 
   };
 
@@ -83,22 +90,22 @@ const Post = ({ post }) => {
         </div>
         <div className="info">
           <div className="item">
-            {isPending ? "Pending..." : data.includes(currentUser.id) ? (
+            {isPending ? "Pending..." : LikesData.includes(currentUser.id) ? (
               <FavoriteOutlinedIcon
                 style={{ color: "red" }} onClick={handleLike} />
             )
               : (<FavoriteBorderOutlinedIcon onClick={handleLike} />
 
               )}
-            {data?.length} Likes
+            {LikesData?.length} Likes
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            {isCommentsPending ? "Pending..." : commentsData?.length} Comments
           </div>
           <div className="item">
             <ShareOutlinedIcon />
-            12 Shared
+            0 Shared
           </div>
         </div>
         {commentOpen && <Comments postId={post.id} />}

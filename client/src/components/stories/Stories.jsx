@@ -1,10 +1,22 @@
 import { useContext } from "react";
-import "./stories.scss"
-import { AuthContext } from "../../context/authContext"
+import "./stories.scss";
+import { AuthContext } from "../../context/authContext";
+import { useQuery } from "@tanstack/react-query";
+import { makeRequest } from "../../axios";
 
 const Stories = () => {
 
     const {currentUser} = useContext(AuthContext)
+
+    // const { isPending, error, data } = useQuery({
+    //   queryKey: ['stories'],
+    //   queryFn: () =>
+  
+    //     makeRequest.get("/stories").then((res) => {
+    //       return res.data;
+    //     })
+  
+    // })
 
     //TEMPORARY DUMMY DATA
 
@@ -34,7 +46,7 @@ const Stories = () => {
   return (
     <div className="stories">
         <div className="story">
-                <img src={currentUser.profilePic} alt="" />
+                <img src={"/upload/"+currentUser.profilePic} alt="" />
             <span>{currentUser.name}</span>
             <button>+</button>
             </div>

@@ -1,0 +1,251 @@
+// @import "../../..//node_modules/bootstrap/scss/";
+
+@import "../../..//node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.dashboard{
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.875rem;
+  opacity: 1;
+  overflow-y: scroll;
+  margin: 0;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.275rem;
+  color: var(--bs-emphasis-color);
+}
+
+/* Layout for admin dashboard skeleton */
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+
+  .row{
+
+    img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        
+    }
+  }
+}
+
+#sidebar {
+  max-width: 264px;
+  min-width: 264px;
+  background: var(--bs-dark);
+  transition: all 0.35s ease-in-out;
+
+  .sidebar-logo {
+    padding: 1.15rem;
+
+    a {
+      color: #e9ecef;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .sidebar-header {
+    color: #e9ecef;
+    font-size: .75rem;
+    padding: 1.5rem 1.5rem .375rem;
+  }
+
+  a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    display: block;
+    font-size: 0.875rem;
+    position: relative;
+
+    &[data-bs-toggle="collapse"]::after {
+      content: "";
+      border: solid;
+      border-width: 0 .075rem .075rem 0;
+      display: inline-block;
+      padding: 2px;
+      position: absolute;
+      right: 1.5rem;
+      top: 1.4rem;
+      transform: rotate(-135deg);
+      transition: all .2s ease-out;
+    }
+
+    &.collapsed::after {
+      transform: rotate(45deg);
+      transition: all .2s ease-out;
+    }
+  }
+
+  &.collapsed {
+    margin-left: -264px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.35s ease-in-out;
+  background: var(--bs-dark-bg-subtle);
+
+  .content {
+    flex: 1;
+    width: 100vw;
+    max-width: 100vw;
+
+    @media (min-width: 768px) {
+      max-width: auto;
+      width: auto;
+    }
+  }
+}
+
+/* Sidebar Toggle */
+#sidebar.collapsed {
+  margin-left: -264px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 30%;
+
+}
+
+.navbar-expand .navbar-nav {
+  margin-left: auto;
+}
+
+.card {
+  box-shadow: 0 0 .875rem 0 rgba(34, 46, 60, .05);
+  margin-bottom: 24px;
+
+  .card-body{
+
+    tbody{
+
+      button {
+        border: none;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        margin-right: 8px;
+
+
+  
+        &.update-btn {
+          background-color: #007bff; // Bootstrap primary blue
+          color: #fff;
+        }
+  
+        &.delete-btn {
+          background-color: #dc3545; // Bootstrap danger red
+          color: #fff;
+        }
+
+        &:last-child{
+          margin-right: 0;
+        }
+  
+        &:hover {
+          opacity: 0.9; // Slightly change opacity on hover
+        }
+      }
+
+    }
+  }
+
+  
+}
+
+.illustration {
+  background-color: var(--bs-primary-bg-subtle);
+  color: var(--bs-emphasis-color);
+
+  .illustration-img {
+    width: 100%;
+    max-width: 150px;
+  }
+}
+
+/* Footer and Navbar adjustments for mobile */
+@media (max-width: 767.98px) {
+  .js-sidebar {
+    margin-left: -264px;
+  }
+
+  #sidebar.collapsed {
+    margin-left: 0;
+  }
+
+  .navbar,
+  footer {
+    width: 100vw;
+  }
+}
+
+/* Theme Toggler */
+.theme-toggle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 10;
+  transform: translateY(-65%);
+  background-color: var(--bs-body-color);
+  text-align: center;
+  border: none;
+
+  .fa-sun,
+  .fa-moon {
+    font-size: 1.25rem;
+    color: #fff;
+    padding: 10px;
+    display: block;
+    cursor: pointer;
+  }
+
+  html[data-bs-theme="dark"] & .fa-sun,
+  html[data-bs-theme="light"] & .fa-moon {
+    display: none;
+  }
+}
+}

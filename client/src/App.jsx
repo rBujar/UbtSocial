@@ -5,6 +5,7 @@ import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile"
+import Dashboard from "./pages/dashboard/Dashboard";
 import "./style.scss"
 import {
   createBrowserRouter,
@@ -34,7 +35,6 @@ function App() {
 
   const Layout = () => {
     return (
-      <QueryClientProvider client={queryClient}>
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <Navbar />
         <div style={{ display: "flex" }}>
@@ -45,7 +45,6 @@ function App() {
           <RightBar />
         </div>
       </div>
-      </QueryClientProvider>
     );
   };
 
@@ -82,11 +81,19 @@ function App() {
       path: "/register",
       element: <Register />,
     },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
+    },
   ]);
 
   return (
     <div>
+        <QueryClientProvider client={queryClient}>
+
       <RouterProvider router={router} />
+      </QueryClientProvider>
+
     </div>
   );
 
