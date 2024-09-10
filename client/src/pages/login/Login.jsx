@@ -22,10 +22,16 @@ const Login = () => {
   const handleLogin = async (e) =>{
     e.preventDefault()
     try{
-      await login(inputs);
-      navigate("/")
+      const user = await login(inputs);
+
+      if(user.role === 1){
+        navigate("/dashboard");
+      } else if(user.role === 0){
+        navigate("/")
+      }
+     
     }catch(err){
-      setErr(err.response.data)
+      setErr(err.response?.data || "An error occurred")
     }
   }
 
@@ -47,12 +53,12 @@ const Login = () => {
         </div>
         <div className="right">
           <h1>Login</h1>
-          <form>
+          <form onSubmit={handleLogin}>
             <input type="text" placeholder="Username" name="username" onChange={handleChange}/>
             <input type="password" placeholder="Password" name="password" onChange={handleChange}/>
-          </form>
           {err && err}
-          <button onClick={handleLogin}>Login</button>
+          <button type="submit">Login</button>
+          </form>
         </div>
       </div>
     </div>
