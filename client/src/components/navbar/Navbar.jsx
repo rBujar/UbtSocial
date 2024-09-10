@@ -8,10 +8,12 @@ import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
+import { Button } from "react-bootstrap";
+import { makeRequest } from "../../axios";
 
 
 const navbar = () => {
@@ -21,6 +23,18 @@ const navbar = () => {
   const { currentUser} = useContext(AuthContext);
 
       // console.log(currentUser)
+
+
+      const handleLogout = async () => {
+        try{
+          await makeRequest.post("/auth/logout");
+          navigate('/login');
+        }catch (error){
+          console.error("Error logging out: ", error);
+        }
+      };
+
+      const navigate = useNavigate();
 
   return (
     <div className="navbar">
@@ -49,6 +63,7 @@ const navbar = () => {
           <img src={"/upload/"+ currentUser.profilePic} alt="" />
           <span>{currentUser.name}</span>
         </div>
+        <Button className="logout" onClick={handleLogout}> Logout </Button>
       </div>
     </div>
   )
