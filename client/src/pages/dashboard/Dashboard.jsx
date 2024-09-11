@@ -1,5 +1,5 @@
 
-import './dashboard.scss'; 
+import  styles from './dashboard.module.scss'; 
 import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../axios.js';
 import { useContext, useEffect, useState } from 'react';
@@ -137,12 +137,12 @@ const Dashboard = () => {
 
 
   return (
-    <div className="dashboard">
-    <div className="wrapper">
-      <aside id="sidebar" className="js-sidebar">
+    <div className={styles.dashboard}>
+    <div className={styles.wrapper}>
+      <aside id={styles.sidebar} className={styles.sidebar}>
         {/* Sidebar */}
         <div className="h-100">
-          <div className="sidebar-logo">
+          <div className={styles.sidebarLogo}>
             <a href="#">UbtSocial</a>
           </div>
           <ul className="sidebar-nav">
@@ -209,7 +209,7 @@ const Dashboard = () => {
             </div>
 
             {/* Cards */}
-            <div className="row">
+            <div className={styles.row}>
               <div className="col-12 col-md-6 d-flex">
                 <div className="card flex-fill border-0 illustration">
                   <div className="card-body p-0 d-flex flex-fill">
