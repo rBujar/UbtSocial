@@ -45,7 +45,7 @@ const Comments = ({postId}) => {
 
     const handleClick = async (e) =>{
         e.preventDefault();
-        addCommentMutation.mutate({desc, postId});
+        if(desc !== "") addCommentMutation.mutate({desc, postId});
         setDesc("");
 
     }
