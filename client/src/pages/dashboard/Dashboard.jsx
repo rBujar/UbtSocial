@@ -1,9 +1,9 @@
 
-import  styles from './dashboard.module.scss'; 
+import  './dashboard.scss'; 
 import { AuthContext } from '../../context/authContext';
 import { makeRequest } from '../../axios.js';
-import { useContext, useEffect, useState } from 'react';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useContext,  useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 // import Update from "../../components/update/adminUpdate.jsx"
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -137,12 +137,12 @@ const Dashboard = () => {
 
 
   return (
-    <div className={styles.dashboard}>
-    <div className={styles.wrapper}>
-      <aside id={styles.sidebar} className={styles.sidebar}>
+    <div className="dashboard">
+    <div className="wrapper">
+      <aside id="sidebar" className="js-sidebar" >
         {/* Sidebar */}
         <div className="h-100">
-          <div className={styles.sidebarLogo}>
+          <div className="sidebar-logo">
             <a href="#">UbtSocial</a>
           </div>
           <ul className="sidebar-nav">
@@ -209,7 +209,7 @@ const Dashboard = () => {
             </div>
 
             {/* Cards */}
-            <div className={styles.row}>
+            <div className="row">
               <div className="col-12 col-md-6 d-flex">
                 <div className="card flex-fill border-0 illustration">
                   <div className="card-body p-0 d-flex flex-fill">
