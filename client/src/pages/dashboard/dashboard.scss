@@ -1,17 +1,12 @@
 // @import "../../..//node_modules/bootstrap/scss/";
 
-@import "../../..//node_modules/bootstrap/scss/bootstrap.scss";
 
 .dashboard{
+  @import "bootstrap/scss/bootstrap";
   
   @import "../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
   
   @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-*,
-::after,
-::before {
-  box-sizing: border-box;
-}
 
 
 
@@ -36,7 +31,7 @@ li {
 h4 {
   font-family: 'Poppins', sans-serif;
   font-size: 1.275rem;
-  color: var(--bs-emphasis-color);
+  color: $black;
 }
 
 /* Layout for admin dashboard skeleton */
@@ -59,7 +54,7 @@ h4 {
 #sidebar {
   max-width: 264px;
   min-width: 264px;
-  background: var(--bs-dark);
+  background: $dark;
   transition: all 0.35s ease-in-out;
   position: relative;
 
@@ -121,7 +116,7 @@ h4 {
   bottom: 0;
   width: 100%;
   padding: 16px;
-  background: var(--bs-dark);
+  background: $dark;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,20 +133,20 @@ h4 {
       transition: background-color 0.3s ease;
 
       &.logout{
-        background-color: #dc3545;
-        color: #fff;
+        background-color: $danger;
+        color: $light;
 
         &:hover{
-          background-color: #c82333;
+          background-color: $danger;
         }
       }
 
       &.mainPage {
-        background-color: #007bff;
-        color: #fff;
+        background-color: $primary;
+        color: $light;
 
         &:hover{
-          background-color: #0056b3;
+          background-color: darken($primary, 10%);
         }
       }
     }
@@ -166,7 +161,7 @@ h4 {
   width: 100%;
   overflow: hidden;
   transition: all 0.35s ease-in-out;
-  background: var(--bs-dark-bg-subtle);
+  background: $body-bg;
 
   .content {
     flex: 1;
@@ -217,13 +212,13 @@ h4 {
 
   
         &.update-btn {
-          background-color: #007bff; // Bootstrap primary blue
-          color: #fff;
+          background-color: $primary; // Bootstrap primary blue
+          color: $light;
         }
   
         &.delete-btn {
-          background-color: #dc3545; // Bootstrap danger red
-          color: #fff;
+          background-color: $danger; // Bootstrap danger red
+          color: $light;
         }
 
         &:last-child{
@@ -242,8 +237,8 @@ h4 {
 }
 
 .illustration {
-  background-color: var(--bs-primary-bg-subtle);
-  color: var(--bs-emphasis-color);
+  background-color: $primary-bg-subtle;
+  
 
   .illustration-img {
     width: 100%;
@@ -274,14 +269,14 @@ h4 {
   right: 0;
   z-index: 10;
   transform: translateY(-65%);
-  background-color: var(--bs-body-color);
+  background-color: $body-color;
   text-align: center;
   border: none;
 
   .fa-sun,
   .fa-moon {
     font-size: 1.25rem;
-    color: #fff;
+    color: $light;
     padding: 10px;
     display: block;
     cursor: pointer;
