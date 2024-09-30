@@ -32,7 +32,7 @@ const Register = () => {
 
   return (
     <div className="register">
-      <div className="card">
+      <div className="register-card">
         <div className="left">
           <h1>Ubt Social.</h1>
           <p>

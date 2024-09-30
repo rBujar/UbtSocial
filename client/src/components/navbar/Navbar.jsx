@@ -9,7 +9,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { AuthContext } from "../../context/authContext";
 import { Button } from "react-bootstrap";
@@ -21,6 +21,9 @@ const navbar = () => {
 
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
 
       // console.log(currentUser)
 
@@ -34,7 +37,41 @@ const navbar = () => {
         }
       };
 
-      const navigate = useNavigate();
+      const handleSearch = async (e) => {
+        e.preventDefault();
+        if(!searchQuery) return;
+        try{
+          const res = await makeRequest.get(`/users/findByUsername/${searchQuery}`);
+          if (res.data){
+            navigate(`/profile/${res.data.id}`);
+            setSearchQuery("")
+            window.location.reload();
+          }
+        }catch (error){
+          console.error("`User not found: ", error);
+        }
+      };
+
+      // useEffect(() => {
+      //   const fetchUser = async () => {
+      //     if (searchQuery) {
+      //       try{
+      //         const response = await makeRequest.get(`/users/findByUsername/${searchQuery}`);
+      //         if (response.data) {
+      //           navigate(`/profile/${res.data.id}`);
+      //           setSearchQuery("")
+      //         }
+
+      //       } catch(error){
+      //         console.error("`User not found: ", error);
+
+      //       }
+      //     }
+      //   };
+
+      //   fetchUser();
+      // }, [searchQuery])
+
 
   return (
     <div className="navbar">
@@ -50,10 +87,15 @@ const navbar = () => {
 
           )}
         <GridViewOutlinedIcon />
-        <div className="search">
+        <form onSubmit={handleSearch} className="search">
           <SearchOutlinedIcon />
-          <input type="text" placeholder="Search" />
-        </div>
+          <input 
+            type="text" 
+            placeholder="Search" 
+            value={searchQuery} 
+            onChange={(e) => setSearchQuery(e.target.value)} 
+          />
+        </form>
       </div>
       <div className="right">
         <PersonOutlineOutlinedIcon />
@@ -61,7 +103,9 @@ const navbar = () => {
         <NotificationsOutlinedIcon />
         <div className="user">
           <img src={"/upload/"+ currentUser.profilePic} alt="" />
-          <span>{currentUser.name}</span>
+          <Link to={`/profile/${currentUser.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+          <span >{currentUser.name}</span>
+          </Link>
         </div>
         <Button className="logout" onClick={handleLogout}> Logout </Button>
       </div>
