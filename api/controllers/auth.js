@@ -3,15 +3,21 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const register = (req, res) => {
-    //CHECK USER IF EXISTS
+
+    const passRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Z][a-zA-Z\d]{6,}$/
 
     const q = "SELECT * FROM users WHERE username = ?";
+
+    if(!passRegex.test(req.body.password)){
+        return res.status(400).json(`Password must contain at least 6 characters,
+                                     start with a capital letter,
+                                     and contain a mix of letters and numbers`)
+    }
 
     db.query(q, [req.body.username], (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length) return res.status(409).json("User already exist!")
-        //CREATE NEw USER
-        //hash password
+       
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(req.body.password, salt)
 

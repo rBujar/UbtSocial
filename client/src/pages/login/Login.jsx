@@ -39,14 +39,14 @@ const Login = () => {
     <div className="login">
       <div className="login-card">
         <div className="left">
-          <h1>Hello world!</h1>
+          <h1>UBT Social</h1>
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. At
             voluptate unde facilis ab numquam asperiores fugiat, consectetur
             harum aliquid adipisci atque minima consequuntur aut quam excepturi,
             eius perspiciatis quisquam tempore!
           </p>
-          <span>Don't you have an account?</span>
+          <span>You don't have an account?</span>
           <Link to="/register">
           <button>Register</button>
           </Link>

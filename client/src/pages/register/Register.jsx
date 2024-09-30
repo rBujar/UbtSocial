@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "./register.scss";
 import { useState } from "react";
 import axios from "axios";
 
 const Register = () => {
+
+  const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
       username:"",
@@ -19,9 +21,12 @@ const Register = () => {
 
     const handleClick = async e =>{
       e.preventDefault();
+      setErr(null)
 
       try{
         await axios.post("http://localhost:8800/api/auth/register", inputs)
+        setInputs({username: "", email: "", password: "", name: ""});
+        Navigate("/login")
         
       }catch(err){
         setErr(err.response.data);
@@ -53,8 +58,8 @@ const Register = () => {
             <input type="email" placeholder="Email" name="email" onChange={handleChange}/>
             <input type="password" placeholder="Password" name="password" onChange={handleChange}/>
             <input type="text" placeholder="Name" name="name" onChange={handleChange}/>
+            {err && <div className="error-message">{err}</div>}
           </form>
-          {err && err}
           <button onClick={handleClick}>Register</button>
         </div>
       </div>

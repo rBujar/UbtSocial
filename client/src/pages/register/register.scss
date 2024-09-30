@@ -60,6 +60,7 @@
           color: #555;
         }
         form {
+          position: relative;
           display: flex;
           flex-direction: column;
           gap: 30px;
@@ -79,6 +80,17 @@
           color: white;
           font-weight: bold;
           cursor: pointer;
+          margin-top: 15px;
+        }
+
+        .error-message{
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 0;
+          color: red;
+          background-color: white;
+          font-size: 10px;
+          font-weight: bold;
         }
       }
     }
